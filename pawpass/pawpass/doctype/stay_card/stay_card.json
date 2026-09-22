@@ -1,0 +1,203 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "PC-.YYYY.-.#####",
+ "creation": "2026-09-22 18:31:41.156179",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_nrbj",
+  "amended_from",
+  "pet",
+  "owner_name",
+  "owner_phone",
+  "check_in_date",
+  "expected_checkout_date",
+  "purpose",
+  "special_instruction",
+  "complaints_and_assignment_section",
+  "vaccination_status",
+  "assigned_attendant",
+  "assignment_notes",
+  "service_section",
+  "service_line",
+  "financials_and_checkout_section",
+  "service_total",
+  "final_amount",
+  "payment_status",
+  "actual_checkout_date",
+  "remarks",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_nrbj",
+   "fieldtype": "Section Break",
+   "label": "Pet and Stay"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Stay Card",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "pet",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Pet",
+   "options": "PET",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "pet.owner_name",
+   "fieldname": "owner_name",
+   "fieldtype": "Data",
+   "label": "Owner Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "pet.owner_phone",
+   "fieldname": "owner_phone",
+   "fieldtype": "Data",
+   "label": "Owner Phone",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "check_in_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Check In Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expected_checkout_date",
+   "fieldtype": "Date",
+   "label": "Expected Checkout Date"
+  },
+  {
+   "default": "Grooming Only",
+   "fieldname": "purpose",
+   "fieldtype": "Select",
+   "label": "Purpose",
+   "options": "Grooming Only\nBoarding\nBoth"
+  },
+  {
+   "fieldname": "special_instruction",
+   "fieldtype": "Text Editor",
+   "label": "Special Instruction"
+  },
+  {
+   "fieldname": "complaints_and_assignment_section",
+   "fieldtype": "Section Break",
+   "label": "Complaints and Assignment"
+  },
+  {
+   "fieldname": "vaccination_status",
+   "fieldtype": "Select",
+   "label": "Vaccination Status",
+   "options": "Not Checked\nValid\nExpired",
+   "read_only": 1
+  },
+  {
+   "fieldname": "assigned_attendant",
+   "fieldtype": "Link",
+   "label": "Assigned Attendant",
+   "options": "ATTENDANT"
+  },
+  {
+   "depends_on": "eval:doc.c",
+   "fieldname": "assignment_notes",
+   "fieldtype": "Small Text",
+   "label": "Assignment Notes"
+  },
+  {
+   "fieldname": "service_section",
+   "fieldtype": "Section Break",
+   "label": "SERVICE"
+  },
+  {
+   "fieldname": "service_line",
+   "fieldtype": "Table",
+   "label": "Service Line",
+   "options": "Service Line"
+  },
+  {
+   "fieldname": "financials_and_checkout_section",
+   "fieldtype": "Section Break",
+   "label": "FINANCIALS AND CHECKOUT"
+  },
+  {
+   "fieldname": "service_total",
+   "fieldtype": "Currency",
+   "label": "Service Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "final_amount",
+   "fieldtype": "Currency",
+   "label": "Final Amount",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Unpaid\nPaid"
+  },
+  {
+   "fieldname": "actual_checkout_date",
+   "fieldtype": "Date",
+   "label": "Actual Checkout Date"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nChecked In\nService\nReady for Pickup\nPicked Up\nCancelled"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-22 19:24:16.529503",
+ "modified_by": "Administrator",
+ "module": "pawpass",
+ "name": "Stay Card",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
