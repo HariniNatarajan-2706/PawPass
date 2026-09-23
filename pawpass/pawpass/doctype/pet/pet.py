@@ -1,11 +1,10 @@
 import frappe
-from frappe.model.naming import make_autoname
 from frappe.model.document import Document
+from frappe.model.naming import make_autoname
 
 class PET(Document):
     def autoname(self):
         if self.pet_code:
-            self.pet_code = self.pet_code.upper()
-            self.name = self.pet_code
+            self.name = self.pet_code.strip().upper()
         else:
-            self.name = make_autoname("PET-.YYYY.-.####")
+            self.name = make_autoname("PET-.#####")

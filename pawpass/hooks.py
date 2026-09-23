@@ -20,7 +20,28 @@ app_license = "mit"
 # 		"has_permission": "pawpass.api.permission.has_app_permission"
 # 	}
 # ]
+#D1 FICTURES--------------------------
+fixtures = [
+    {
+        "dt": "Role",
+        "filters": [
+            ["name", "in", ["PP Front Desk", "PP Attendant", "PP Manager"]]
+        ],
+    },
+    {
+        "dt": "Custom DocPerm",
+        "filters": [
+            ["role", "in", ["PP Front Desk", "PP Attendant", "PP Manager"]]
+        ],
+    },
+]
 
+#D2 PERMISSION.PY-------------------
+permission_query_conditions = {
+    "Stay Card": "pawpass.permissions.stay_card_query"
+}
+#hooks tasks-- after install
+after_install = "pawpass.permissions.after_install"
 # Includes in <head>
 # ------------------
 
