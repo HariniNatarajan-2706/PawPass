@@ -63,3 +63,38 @@ def after_install():
         settings.save(ignore_permissions=True)
 
     print("PawPass installed successfully.")
+def get_shop_name():
+    return frappe.db.get_single_value("PAWPASS SETTING", "shop_name") or "PawPass"
+def check_upcoming_checkouts():
+    settings = frappe.get_single("PAWPASS SETTING")
+    reminder_days = settings.reminder_days_before_checkout or 1
+
+    today = frappe.utils.getdate()
+    reminder_date = frappe.utils.add_days(today, reminder_days)
+
+    stays = frappe.get_all(
+        "Stay Card",
+        filters={
+            "expected_checkout_date": ["between", [today, reminder_date]],
+            "status": ["not in", ["Picked Up", "Cancelled"]]
+        },
+        fields=["name", "pet", "owner_name", "expected_checkout_date"]
+    )
+
+    for stay in stays:
+        email = frappe.db.get_value(
+            "PET",
+            stay.pet,
+            "owner_email"
+        )
+
+        if email:
+            frappe.sendmail(
+                recipients=[email],
+                subject="PawPass Checkout Reminder",
+                message=(
+                    f"Dear {stay.owner_name},<br><br>"
+                    f"Your pet {stay.pet} is scheduled for checkout "
+                    f"on {frappe.utils.formatdate(stay.expected_checkout_date)}."
+                )
+            )

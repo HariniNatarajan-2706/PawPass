@@ -110,3 +110,66 @@ def rename_attendant(old_name, new_name):
         new_name,
         merge=False
     )
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def get_attendants_for_stay_card(
+    doctype, txt, searchfield, start, page_len, filters
+):
+    purpose = (filters.get("purpose") or "").lower()
+
+    if purpose == "both":
+        return frappe.db.sql(
+            """
+            SELECT
+                a.name,
+                a.attendant_name
+            FROM
+                `tabATTENDANT` a
+            WHERE
+                a.status = "Active"
+                AND (
+                    a.name LIKE %(txt)s
+                    OR a.attendant_name LIKE %(txt)s
+                )
+            ORDER BY
+                a.attendant_name
+            LIMIT %(start)s, %(page_len)s
+            """,
+            {
+                "txt": f"%{txt}%",
+                "start": start,
+                "page_len": page_len,
+            },
+        )
+
+    is_boarding = 1 if purpose == "boarding" else 0
+
+    return frappe.db.sql(
+        """
+        SELECT
+            a.name,
+            a.attendant_name
+        FROM
+            `tabATTENDANT` a
+        INNER JOIN
+            `tabSERVICE TYPE` s
+            ON a.specialization = s.name
+        WHERE
+            a.status = "Active"
+            AND s.is_boarding = %(is_boarding)s
+            AND (
+                a.name LIKE %(txt)s
+                OR a.attendant_name LIKE %(txt)s
+            )
+        ORDER BY
+            a.attendant_name
+        LIMIT %(start)s, %(page_len)s
+        """,
+        {
+            "is_boarding": is_boarding,
+            "txt": f"%{txt}%",
+            "start": start,
+            "page_len": page_len,
+        },
+    )

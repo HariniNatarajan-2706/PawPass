@@ -28,7 +28,8 @@
   "payment_status",
   "actual_checkout_date",
   "remarks",
-  "status"
+  "status",
+  "cancellation_reason"
  ],
  "fields": [
   {
@@ -106,6 +107,7 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "assigned_attendant",
    "fieldtype": "Link",
    "label": "Assigned Attendant",
@@ -163,18 +165,26 @@
    "label": "Remarks"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
    "options": "Draft\nChecked In\nService\nReady for Pickup\nPicked Up\nCancelled"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cancellation_reason",
+   "fieldtype": "Small Text",
+   "label": "Cancellation Reason",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-22 19:24:16.529503",
+ "modified": "2026-09-24 08:22:14.987540",
  "modified_by": "Administrator",
  "module": "pawpass",
  "name": "Stay Card",

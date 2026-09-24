@@ -5,6 +5,7 @@ from frappe import _
 from frappe.utils import add_days, getdate, today
 from frappe.model.document import Document
 
+
 class StayCard(Document):
 
     def validate(self):
@@ -111,7 +112,6 @@ class StayCard(Document):
                     "total_stays": total_stays,
                 },
                 update_modified=False,
-                ignore_permissions=True,
             )
 
         invoice = frappe.new_doc("Invoice")
@@ -130,12 +130,11 @@ class StayCard(Document):
         )
 
     def on_cancel(self):
-        self.status = "Cancelled"
-
         if self.pet:
             total_stays = (
                 frappe.db.get_value("PET", self.pet, "total_stays") or 0
             )
+
             frappe.db.set_value(
                 "PET",
                 self.pet,
@@ -149,7 +148,17 @@ class StayCard(Document):
         )
 
         if invoice:
-            frappe.get_doc("Invoice", invoice).cancel()
+            invoice_doc = frappe.get_doc("Invoice", invoice)
+
+            if invoice_doc.docstatus == 1:
+                invoice_doc.cancel()
+
+        frappe.db.set_value(
+            "Stay Card",
+            self.name,
+            "status",
+            "Cancelled",
+        )
 
     def on_trash(self):
         if self.status not in ("Draft", "Cancelled"):
@@ -159,3 +168,6 @@ class StayCard(Document):
 
     def on_update(self):
         pass
+
+    def before_print(self, print_settings=None):
+        self.print_summary = f"{self.owner_name} - {self.pet}"

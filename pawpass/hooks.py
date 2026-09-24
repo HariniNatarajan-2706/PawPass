@@ -42,6 +42,24 @@ permission_query_conditions = {
 }
 #hooks tasks-- after install
 after_install = "pawpass.permissions.after_install"
+# hooks.py
+ignore_links_on_delete = ["Invoice"]
+
+#audit Hooks
+doc_events = {
+    "*": {
+        "on_update": "pawpass.audit.log_change",
+        "on_submit": "pawpass.audit.log_change",
+        "on_cancel": "pawpass.audit.log_change",
+    }
+}
+
+jinja = {
+    "methods": [
+        "pawpass.permissions.get_shop_name"
+    ]
+}
+
 # Includes in <head>
 # ------------------
 
@@ -169,7 +187,11 @@ after_install = "pawpass.permissions.after_install"
 
 # Scheduled Tasks
 # ---------------
-
+scheduler_events = {
+    "daily": [
+        "pawpass.permissions.check_upcoming_checkouts"
+    ]
+}
 # scheduler_events = {
 # 	"all": [
 # 		"pawpass.tasks.all"
