@@ -8,3 +8,13 @@ class PET(Document):
             self.name = self.pet_code.strip().upper()
         else:
             self.name = make_autoname("PET-.#####")
+    def after_insert(self):
+        if self.owner_email:
+            frappe.sendmail(
+                recipients=[self.owner_email],
+                subject="PawPass Test Email",
+                message=(
+                    f"Hello {self.owner_name},<br><br>"
+                    f"Your pet {self.name} has been successfully registered."
+                )
+            )

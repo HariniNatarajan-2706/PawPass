@@ -128,6 +128,25 @@ class StayCard(Document):
             stay_card=self.name,
             queue="short",
         )
+    def send_stay_complete_email(stay_card):
+        doc = frappe.get_doc("Stay Card", stay_card)
+
+        if not doc.owner_email:
+            return
+
+        frappe.sendmail(
+            recipients=[doc.owner_email],
+            subject=f"Stay Completed - {doc.pet}",
+            message=f"""
+                <p>Dear {doc.owner_name},</p>
+
+                <p>Your pet <b>{doc.pet}</b>'s stay has been completed.</p>
+
+                <p><b>Total Amount:</b> {doc.final_amount}</p>
+
+                <p>Thank you for choosing PawPass.</p>
+            """,
+        )
 
     def on_cancel(self):
         if self.pet:

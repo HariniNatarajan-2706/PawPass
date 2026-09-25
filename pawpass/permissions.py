@@ -63,6 +63,8 @@ def after_install():
         settings.save(ignore_permissions=True)
 
     print("PawPass installed successfully.")
+
+
 def get_shop_name():
     return frappe.db.get_single_value("PAWPASS SETTING", "shop_name") or "PawPass"
 def check_upcoming_checkouts():

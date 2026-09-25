@@ -66,10 +66,10 @@ def transfer_stays(from_attendant, to_attendant):
 
 @frappe.whitelist()
 def share_stay_card(stay_card_name, user_email):
-    if not frappe.db.exists("Stay Card", stay_card_name):
-        frappe.throw(f"Stay Card {stay_card_name} does not exist")
-    if not frappe.db.exists("User", user_email):
-        frappe.throw(f"User {user_email} does not exist")
+    #if not frappe.db.exists("Stay Card", stay_card_name):
+    #    frappe.throw(f"Stay Card {stay_card_name} does not exist")
+    #if not frappe.db.exists("User", user_email):
+    #    frappe.throw(f"User {user_email} does not exist")
     frappe.share.add(
         "Stay Card",
         stay_card_name,

@@ -40,10 +40,9 @@ fixtures = [
 permission_query_conditions = {
     "Stay Card": "pawpass.permissions.stay_card_query"
 }
+
 #hooks tasks-- after install
 after_install = "pawpass.permissions.after_install"
-# hooks.py
-ignore_links_on_delete = ["Invoice"]
 
 #audit Hooks
 doc_events = {
@@ -51,7 +50,7 @@ doc_events = {
         "on_update": "pawpass.audit.log_change",
         "on_submit": "pawpass.audit.log_change",
         "on_cancel": "pawpass.audit.log_change",
-    }
+    } 
 }
 
 jinja = {
@@ -59,6 +58,12 @@ jinja = {
         "pawpass.permissions.get_shop_name"
     ]
 }
+
+
+
+# hooks.py
+ignore_links_on_delete = ["Invoice"]
+
 
 # Includes in <head>
 # ------------------
@@ -192,6 +197,7 @@ scheduler_events = {
         "pawpass.permissions.check_upcoming_checkouts"
     ]
 }
+
 # scheduler_events = {
 # 	"all": [
 # 		"pawpass.tasks.all"
